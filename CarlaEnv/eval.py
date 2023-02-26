@@ -101,6 +101,7 @@ def plot_eval(eval_csv_path):
 
     # Load the dataframe
     df = pd.read_csv(eval_csv_path)
+    eval_plot_path = eval_csv_path.replace(".csv", ".png")
 
     # Get a list of unique episode numbers
     episode_numbers = df['episode'].unique()
@@ -146,9 +147,9 @@ def plot_eval(eval_csv_path):
 
         axs[i][7].plot(episode_df['vehicle_location_x'], episode_df['vehicle_location_y'], label='Vehicle')
         axs[i][7].plot(episode_df['waypoint_x'], episode_df['waypoint_y'], label='Waypoint')
-        axs[i][7].plot(episode_df['vehicle_location_x'].head(1), episode_df['vehicle_location_y'].head(1), 'go',
+        axs[i][7].plot(episode_df['waypoint_x'].head(1), episode_df['waypoint_x'].head(1), 'go',
                        label='Start')
-        axs[i][7].plot(episode_df['vehicle_location_x'].tail(1), episode_df['vehicle_location_y'].tail(1), 'ro',
+        axs[i][7].plot(episode_df['waypoint_y'].tail(1), episode_df['waypoint_y'].tail(1), 'ro',
                        label='End')
 
         axs[i, 7].set_xlim(left=min(-2, min(episode_df['waypoint_x'] - 3)))
@@ -168,7 +169,7 @@ def plot_eval(eval_csv_path):
     plt.tight_layout()
 
     # Show the plot
-    plt.savefig(os.path.join(os.path.dirname(eval_csv_path), "plot.png"))
+    plt.savefig(eval_plot_path)
 
 
 if __name__ == "__main__":

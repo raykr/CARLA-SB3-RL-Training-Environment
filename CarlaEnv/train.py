@@ -9,7 +9,7 @@ from vae.utils.misc import LSIZE
 from vae_commons import create_encode_state_fn, load_vae
 
 from rewards import reward_functions
-from utils import HParamCallback, TensorboardCallback, write_json
+from utils import HParamCallback, TensorboardCallback, write_json, CustomActorCriticPolicy
 
 from config import CONFIG
 
@@ -32,7 +32,7 @@ env = CarlaRouteEnv(obs_res=CONFIG["obs_res"],
                     fps=15, action_smoothing=CONFIG["action_smoothing"],
                     action_space_type='continuous', activate_spectator=False)
 
-model = AlgorithmRL('MultiInputPolicy', env, verbose=1, seed=100, tensorboard_log=log_dir, device='cpu',
+model = AlgorithmRL(CustomActorCriticPolicy, env, verbose=1, seed=100, tensorboard_log=log_dir, device='cpu',
                     **CONFIG["algorithm_params"])
 
 model_name = f'{model.__class__.__name__}_{CONFIG["vae_model"].replace("_", "")}_{int(time.time())}'
