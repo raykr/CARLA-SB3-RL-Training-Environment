@@ -131,7 +131,7 @@ def get_image_point(loc, K, w2c):
 
 
 sensor_transforms = {
-    "spectator": carla.Transform(carla.Location(x=-5.5, z=2.8), carla.Rotation(pitch=-15)),
+    "spectator": carla.Transform(carla.Location(x=-5.2, z=2.8), carla.Rotation(pitch=-15)),
     "dashboard": carla.Transform(carla.Location(x=1.6, z=1.7)),
     "lidar": carla.Transform(carla.Location(x=0.0, z=2.4)),
     "birdview": carla.Transform(carla.Location(x=90, y=210, z=175), carla.Rotation(pitch=-90))
@@ -307,7 +307,10 @@ class Camera(CarlaActorBase):
         camera_bp = world.get_blueprint_library().find(camera_type)
         camera_bp.set_attribute("image_size_x", str(width))
         camera_bp.set_attribute("image_size_y", str(height))
-        camera_bp.set_attribute("fov", f"110")
+        fov = '110'
+        if width > 300:
+            fov = '98'
+        camera_bp.set_attribute("fov", fov)
         # camera_bp.set_attribute("sensor_tick", str(sensor_tick))
 
         # Create and setup camera actor

@@ -3,7 +3,7 @@ import os
 from stable_baselines3 import PPO, DQN
 from stable_baselines3.common.callbacks import CheckpointCallback
 from stable_baselines3.common.logger import configure
-from CarlaEnv.envs.carla_route_vae_env import CarlaRouteEnv
+from CarlaEnv.envs.linkedin import CarlaRouteEnv
 import time
 
 from CarlaEnv.eval import run_eval
@@ -32,7 +32,7 @@ env = CarlaRouteEnv(obs_res=CONFIG["obs_res"],
                     observation_space=observation_space,
                     encode_state_fn=encode_state_fn, decode_vae_fn=decode_vae_fn,
                     fps=15, action_smoothing=CONFIG["action_smoothing"],
-                    action_space_type='continuous', activate_spectator=False)
+                    action_space_type='continuous', activate_spectator=True)
 
 model = AlgorithmRL('MultiInputPolicy', env, verbose=1, seed=100, tensorboard_log=log_dir, device='cpu',
                     **CONFIG["algorithm_params"])
